@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  builder:
+    container_name: builder
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - .:/app
+
+  runner:
+    container_name: runner
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    working_dir: /app
+    ports:
+      - "3900:3900"
+    depends_on:
+      - builder
